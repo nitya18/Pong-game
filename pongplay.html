@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+
+<HTML>
+	
+<HEAD>
+
+	
+	<TITLE>
+The Canvas Tag
+</TITLE>
+
+<script>
+
+</script>
+</head>
+<BODY bgcolor="black">
+
+
+<SECTION>
+
+<CANVAS WIDTH="1350" HEIGHT="600" ID="canvas_1" style="border:5px solid green;" tabindex="0">
+
+			Canvas tag not supported
+		
+</CANVAS>
+	
+</SECTION>
+
+
+
+
+
+
+	<SCRIPT>
+
+
+
+var canvas = document.getElementById("canvas_1");
+
+canvas.addEventListener('keydown', doKeyDown, true);
+
+var c = canvas.getContext("2d");
+
+c.fillStyle="green";
+c.strokeText('click on me',100,100,50);	
+c.fillRect(40, 50, 20, 150);
+
+			
+var a = 30;
+ 
+c.fillRect(1290,50,20,150);
+
+		
+var b=30;
+c.moveTo(657,0);
+c.lineTo(657,630);
+c.strokeStyle="green";
+c.lineWidth=4;
+c.setLineDash([5,2]);
+c.stroke();
+init();
+function doKeyDown(e){
+
+			
+//====================
+	
+//	THE W KEY
+	
+//====================
+	
+if (e.keyCode==87) {
+
+if(a>20)
+{				
+clearCanvas();
+				
+a = a - 100;
+
+}			}
+
+
+//====================
+
+//	THE S KEY
+	
+//====================
+
+if (e.keyCode == 83) {
+
+if(a<440)
+{	
+clearCanvas();
+	
+a= a+100;
+   
+
+}}
+			
+
+
+
+			
+//====================
+			
+//	THE down KEY
+			
+//====================
+			
+if(e.keyCode==40){
+			
+if(b<440)
+{	
+clearCanvas();
+				
+b=b+100;    
+                                
+}}	
+//====================
+			
+//	THE up KEY
+			
+//====================
+			
+if (e.keyCode ==38){
+if(b>25)
+{
+				
+clearCanvas();
+				
+b=b-100;
+                                
+
+}}
+}
+		
+function clearCanvas() {
+			
+canvas.width = canvas.width;
+		
+}
+
+	
+function init(){
+    var canvas = document.getElementsByTagName('canvas')[0];
+     var c = canvas.getContext('2d');
+
+     var container = {x:0,y:0,width:1350,height:600};
+     var circles = [
+                    {x:800,y:350,r:25,color:125,vx:8,vy:-8}
+                         
+     ];
+      var p1=0;
+      var p2=0;
+     
+     function draw(){
+
+         c.fillStyle = 'black';
+         c.strokeStyle = 'black';
+         c.fillRect(container.x,container.y,container.width,container.height);
+         //c.clearRect(container.x,container.y,container.width,container.height);
+         //c.strokeRect(container.x,container.y,container.width,container.height);
+c.fillStyle="green";
+		
+c.fillRect(40, a, 20, 150);
+
+			
+c.fillRect(1290,b,20,150);
+
+	 
+c.moveTo(657,0);
+c.lineTo(657,630);
+c.strokeStyle="green";
+c.lineWidth=4;
+c.setLineDash([5,2]);
+c.stroke();
+var q=50;
+               var ctx = document.getElementById('canvas_1').getContext('2d');
+                ctx.font = "48px serif";
+                ctx.fillText("score:"+p1, 10, 50);
+				ctx.fillText("score:"+p2,1150,50)
+                     //document.wite("<a href="pongplay.html">replay</a>");
+         for(var i=0; i <circles.length; i++){
+             c.fillStyle = 'hsl(' + circles[i].color + ',100%,50%)';
+             c.beginPath();
+             c.arc(circles[i].x,circles[i].y,circles[i].r,0,2*Math.PI,false);
+             c.fill();
+
+             
+             if((circles[i].x + circles[i].vx + circles[i].r > container.x + container.width) || (circles[i].x - circles[i].r + circles[i].vx < container.x)){
+                circles[i].vx = - circles[i].vx;
+             }
+             if((circles[i].y + circles[i].vy + circles[i].r > container.y + container.height) || (circles[i].y - circles[i].r + circles[i].vy < container.y)){
+                 circles[i].vy = - circles[i].vy;
+             }
+             
+           
+             if((circles[i].vx<0)&&(circles[i].x + circles[i].r)<110) //player1
+               {
+                
+               if(((circles[i].y+circles[i].vy+circles[i].r)>(a-10))&&(circles[i].y+circles[i].vy+circles[i].r)<(a+180))
+              {
+               p1++;
+                
+
+				if(p1%6==0&&p2>0)
+              {if(circles[i].vx>0)
+               circles[i].vx=circles[i].vx+1;
+			   else
+			   circles[i].vx=circles[i].vx-1;
+                if(circles[i].vy>0)
+               circles[i].vy=circles[i].vy+1;
+			   else
+			   circles[i].vy=circles[i].vy-1;
+               }            
+              circles[i].vx = - circles[i].vx;
+              }}
+            
+             if((circles[i].vx>0)&&(circles[i].x + circles[i].r)>1280) //player2
+               {
+                
+         if(((circles[i].y+circles[i].vy+circles[i].r)>(b-10))&&(circles[i].y+circles[i].vy+circles[i].r)<(b+180))
+              {
+              p2++;
+			    
+              circles[i].vx = - circles[i].vx;
+              }}
+            if(((circles[i].x-circles[i].r)>1260)||(circles[i].x+circles[i].r<110))//for red color
+               {
+                circles[i].color=0;
+                }
+              if((circles[i].x- circles[i].r<1260)&&(circles[i].x+circles[i].x>110))
+               {
+                circles[i].color=120;
+                }
+             circles[i].x +=circles[i].vx;
+             circles[i].y +=circles[i].vy;
+         
+        }
+         requestAnimationFrame(draw);
+
+     }
+
+
+    requestAnimationFrame(draw);
+
+
+}
+</SCRIPT>
+</BODY>
+
+</HTML>

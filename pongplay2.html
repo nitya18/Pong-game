@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+
+<HTML>
+	
+<HEAD>
+
+	
+	<TITLE>
+The Canvas Tag
+</TITLE>
+
+<script>
+
+</script>
+</head>
+<BODY bgcolor="black">
+
+
+<SECTION>
+
+<CANVAS WIDTH="1350" HEIGHT="600" ID="canvas_1" style="border:5px solid green;" tabindex="0">
+
+			Canvas tag not supported
+		
+</CANVAS>
+	
+</SECTION>
+
+
+
+
+
+
+	<SCRIPT>
+
+
+
+var canvas = document.getElementById("canvas_1");
+
+canvas.addEventListener('keydown', doKeyDown, true);
+
+var c = canvas.getContext("2d");
+           
+
+
+c.fillStyle="green";
+	
+c.fillText("click on me",100,100);	
+c.fillRect(100, 540, 300, 20);
+
+	
+var score=0;		
+var a = 100;
+ 
+init();
+function doKeyDown(e){
+
+			
+//====================
+	
+//	THE left key
+	
+//====================
+	
+
+if (e.keyCode==37) {
+if(a>5)
+{
+
+clearCanvas();
+				
+a = a-100;
+
+ }
+//else
+}                              
+//====================
+
+//	THE right key
+	
+//====================
+
+if (e.keyCode == 39) {
+if(a<1100)
+{
+
+	
+clearCanvas();
+	
+a= a+100;
+   
+
+}
+
+}}
+		
+function clearCanvas() {
+			
+canvas.width = canvas.width;
+		
+}
+
+	
+function init(){
+    var canvas = document.getElementsByTagName('canvas')[0];
+     var c = canvas.getContext('2d');
+
+     var container = {x:0,y:0,width:1350,height:600};
+     var circles = [
+                    {x:800,y:450,r:35,color:125,vx:3,vy:-3},
+                    {x:400,y:200,r:50,color:120,vx:2,vy:-2},
+                     {x:90,y:50,r:25,color:127,vx:4,vy:-4},
+     ];
+     
+     function draw(){
+
+         c.fillStyle = 'black';
+         c.strokeStyle = 'black';
+         c.fillRect(container.x,container.y,container.width,container.height);
+         //c.clearRect(container.x,container.y,container.width,container.height);
+         //c.strokeRect(container.x,container.y,container.width,container.height);
+c.fillStyle="green";
+		
+c.fillRect(a,540 ,300, 20);
+               var ctx = document.getElementById('canvas_1').getContext('2d');
+                ctx.font = "48px serif";
+                ctx.fillText("score:"+score, 600, 50);
+			
+
+         for(var i=0; i <circles.length; i++){
+            
+            c.fillStyle = 'hsl(' + circles[i].color + ',100%,50%)';
+             c.beginPath();
+             c.arc(circles[i].x,circles[i].y,circles[i].r,0,2*Math.PI,false);
+             c.fill();
+
+             if((circles[i].x + circles[i].vx + circles[i].r > container.x + container.width) || (circles[i].x - circles[i].r + circles[i].vx < container.x)){
+                circles[i].vx = - circles[i].vx;
+             }
+             if((circles[i].y + circles[i].vy + circles[i].r > container.y + container.height) || (circles[i].y - circles[i].r + circles[i].vy < container.y)){
+                 circles[i].vy = - circles[i].vy;
+             }
+             
+           
+           
+             if((circles[i].vy>0)&&(circles[i].y + circles[i].r)>540&&(circles[i].y+circles[i].r<545)) //player1
+               {
+                
+               if(((circles[i].x+circles[i].vx+circles[i].r)>(a))&&(circles[i].x+circles[i].vx+circles[i].r)<(a+380))
+              {
+              
+              circles[i].vy = - circles[i].vy;
+               score++;
+			   //c.fillStyle("green");
+			  //c.fillText(+score,10,10);
+			   if((score%6)==0) //speed
+			  { if(circles[i].vx>0)
+			  circles[i].vx=circles[i].vx+1;
+               else
+                circles[i].vx=circles[i].vx-1			   
+			   if(circles[i].vy>0)
+			   circles[i].vy=circles[i].vy+1;
+               else
+                circles[i].vy=circles[i].vy-1;			   
+               }}
+              }            
+          if(((circles[i].y+circles[i].r)>547))//for red color
+              {
+                circles[i].color=0;
+                  }
+              if((circles[i].y+circles[i].r<540))
+               {
+                circles[i].color=120;
+               }
+             circles[i].x +=circles[i].vx;
+             circles[i].y +=circles[i].vy;
+         
+        }
+         requestAnimationFrame(draw);
+}
+
+
+
+    requestAnimationFrame(draw);
+}
+
+</SCRIPT>
+</BODY>
+
+</HTML>
